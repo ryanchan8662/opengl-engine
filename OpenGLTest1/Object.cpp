@@ -42,7 +42,7 @@ public:
 		if (temp_colour == nullptr) *success_state = 0;
 		else {
 			object_colour = temp_colour;
-			*object_colour = glm::vec3(0.5f, 0.5f, 0.5f);
+			*object_colour = glm::vec3(0.75f, 0.75f, 0.75f);
 		}
 
 		Object** temp_children = (Object**)malloc(0); // allocate for 0 initial children
@@ -116,9 +116,9 @@ public:
 	// DONE: structural support for children
 
 	void SetAsTrianglePrimitive(float cube_scale) {
-		glm::vec3 p1 = glm::vec3(-20.0f, -10.0f, 10.0f);
-		glm::vec3 p2 = glm::vec3(20.0f, -10.0f, 10.0f);
-		glm::vec3 p3 = glm::vec3(0.0f, 20.0f, -10.0f);
+		glm::vec3 p1 = glm::vec3(-20.0f, 0.0f, 0.0f);
+		glm::vec3 p2 = glm::vec3(20.0f, 0.0f, 0.0f);
+		glm::vec3 p3 = glm::vec3(0.0f, 40.0f, 0.0f);
 
 		glm::vec3* points = (glm::vec3*)malloc(3*sizeof(glm::vec3));
 		if (points != nullptr) {
@@ -128,5 +128,62 @@ public:
 
 			this->AddPolygon(points, 3);
 		} else printf("The triangle primitive could not be created.\n");
+	}
+
+	void SetAsCubePrimitive(float cube_scale) {
+
+		glm::vec3* points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(-cube_scale, -cube_scale, cube_scale);
+			points[1] = glm::vec3(cube_scale, -cube_scale, cube_scale);
+			points[2] = glm::vec3(cube_scale, cube_scale, cube_scale);
+			points[3] = glm::vec3(-cube_scale, cube_scale, cube_scale);
+			this->AddPolygon(points, 4);
+		}
+
+		points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(cube_scale, -cube_scale, cube_scale);
+			points[1] = glm::vec3(cube_scale, -cube_scale, -cube_scale);
+			points[2] = glm::vec3(cube_scale, cube_scale, -cube_scale);
+			points[3] = glm::vec3(cube_scale, cube_scale, cube_scale);
+			this->AddPolygon(points, 4);
+		}
+
+		points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(cube_scale, -cube_scale, -cube_scale);
+			points[1] = glm::vec3(-cube_scale, -cube_scale, -cube_scale);
+			points[2] = glm::vec3(-cube_scale, cube_scale, -cube_scale);
+			points[3] = glm::vec3(cube_scale, cube_scale, -cube_scale);
+			this->AddPolygon(points, 4);
+		}
+
+		points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(-cube_scale, -cube_scale, -cube_scale);
+			points[1] = glm::vec3(-cube_scale, -cube_scale, cube_scale);
+			points[2] = glm::vec3(-cube_scale, cube_scale, cube_scale);
+			points[3] = glm::vec3(-cube_scale, cube_scale, -cube_scale);
+			this->AddPolygon(points, 4);
+		}
+
+		points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(-cube_scale, cube_scale, cube_scale);
+			points[1] = glm::vec3(cube_scale, cube_scale, cube_scale);
+			points[2] = glm::vec3(cube_scale, cube_scale, -cube_scale);
+			points[3] = glm::vec3(-cube_scale, cube_scale, -cube_scale);
+			this->AddPolygon(points, 4);
+		}
+
+		points = (glm::vec3*)malloc(4 * sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = glm::vec3(-cube_scale, -cube_scale, -cube_scale);
+			points[1] = glm::vec3(cube_scale, -cube_scale, -cube_scale);
+			points[2] = glm::vec3(cube_scale, -cube_scale, cube_scale);
+			points[3] = glm::vec3(-cube_scale, -cube_scale, cube_scale);
+			this->AddPolygon(points, 4);
+		}
 	}
 };

@@ -19,7 +19,7 @@ float perspective_fov = 70.0f;
 float clip_near = 0.01f;
 float clip_far = 500.0f;
 
-int backface_culling = 0;
+int backface_culling = 1;
 int spin_velocity = 0;
 
 glm::vec3 camera_position;
@@ -69,12 +69,33 @@ void Init(int* success_state) {
 
 	scene_data = new Data(success_state);
 
+	// set up world lighting
+	glEnable(GL_LIGHTING);
+	float ambient[] = {0.15f, 0.15f, 0.15f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+	glEnable(GL_COLOR_MATERIAL);
+	
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+	// set up diffuse light source
+	float light_ambient[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	float light_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+	float light_position[] = { 50.0f, 50.0f, 50.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glEnable(GL_LIGHT0);
+
+	glEnable(GL_NORMALIZE);
 }
 
 void DrawGrid(float range, float spacing, int orientation) {
 	// initialise line behaviour
 	glLineStipple(1, 0xAAAA);
 	glEnable(GL_LINE_STIPPLE);
+	glDisable(GL_LIGHTING);
 
 	// grid draw sequence
 	glColor3f(grid_colour.x, grid_colour.y, grid_colour.z);
@@ -115,6 +136,7 @@ void DrawGrid(float range, float spacing, int orientation) {
 		glVertex3f(0.0f, 0.0f, -range);
 		glVertex3f(0.0f, 0.0f, range);
 	} glEnd();
+	glEnable(GL_LIGHTING);
 }
 
 // TODO: implement support for composite-face mesh groups
@@ -130,6 +152,7 @@ void StartFaceType(int vertex_count) {
 
 // TODO: transformation support for children
 void DrawMeshActors() {
+
 	// store pointer of 1D actor array in procedural stack
 	Object** actor_list = scene_data->GetActors();
 
@@ -148,6 +171,9 @@ void DrawMeshActors() {
 		if (object_colour != nullptr) glColor3f((*object_colour).x, (*object_colour).y, (*object_colour).z);
 		else glColor3f(0.5f, 0.5f, 0.5f);
 
+		// set actor material
+		//glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, glm::value_ptr(*object_colour));
+
 		int object_face_count;
 		Face* object_faces = actor_list[actor]->GetFaces(&object_face_count);
 		// add all faces into scene
@@ -159,6 +185,12 @@ void DrawMeshActors() {
 			StartFaceType(vertex_count);
 
 			// add all vertices of faces to scene
+			// TODO: calculate normals once during object creation or modification
+			if (vertex_count > 2) { // if a polygon, calculate normals
+				glm::vec3 normal = glm::cross(curr_face.vertex_data[2] - curr_face.vertex_data[1],
+					curr_face.vertex_data[0] - curr_face.vertex_data[1]);
+				glNormal3f(normal.x, normal.y, normal.z);
+			} // otherwise, normals do not need to be calculated
 			for (int i = 0; i < vertex_count; i++) {
 				glm::vec3 vertex_data = curr_face.vertex_data[i];
 				glVertex3f(vertex_data.x, vertex_data.y, vertex_data.z);
@@ -203,6 +235,8 @@ void DrawFrame() {
 
 	// environment draw sequence ~~~~~~~~~~~~~~~~~~~~
 	DrawGrid(50.0f, 5.0f, 1);
+
+
 	DrawMeshActors();
 
 	// conclude draw frame
@@ -284,12 +318,12 @@ void MouseMovement(int x, int y) {
 	mouse_position.x = (float)x; mouse_position.y = (float)y;
 	
 	// if only middle wheel clicked, morbit
-	if (mouse_middle_down && !shift_down && !ctrl_down && !keybind_active) {
+	if (mouse_left_down && !shift_down && !ctrl_down && !keybind_active) {
 		camera_rotation.x += mouse_delta.x * MOUSE_SENSITIVITY;
 		camera_rotation.y += mouse_delta.y * MOUSE_SENSITIVITY;
 
 	// if middle wheel AND mouse key modifier (space), pan
-	} else if (mouse_middle_down && shift_down && !ctrl_down && !keybind_active) {
+	} else if (mouse_left_down && shift_down && !ctrl_down && !keybind_active) {
 		camera_position.x += mouse_delta.x / 5.0f;
 		camera_position.y += mouse_delta.y/-5.0f;
 	} else if (keybind_active) { // TODO: translate object planar to screen
@@ -301,7 +335,7 @@ Object* CreateCube() {
 	int success_state = 1;
 	Object* production_cube = new Object(&success_state);
 	
-	production_cube->SetAsTrianglePrimitive(10.0f);
+	production_cube->SetAsCubePrimitive(2.0f);
 	if (success_state) {
 		scene_data->AddActor(production_cube, &success_state);
 		printf("Cube created.\n");
@@ -359,13 +393,13 @@ int main(int argc, char* argv[]) {
 	Init(&success_state);
 
 	// variable test triangles, remove later
-	for (int i = -50.0f; i < 50.0f; i += 10.0f) {
+	for (float i = -50.0f; i < 50.0f; i += 10.0f) {
 		glm::mat4* transform_matrix = (glm::mat4*)malloc(sizeof(glm::mat4));
 		*transform_matrix = glm::mat4(1.0f);
 		(*transform_matrix)[3][2] = i;
+		*transform_matrix = glm::rotate(*transform_matrix, glm::radians(i*2.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		Object* temp_cube = CreateCube();
 		temp_cube->Transform(transform_matrix);
-		temp_cube->SetColour((i + 50.0f) / 100.0f, (i + 50.0f) / 100.0f, (i + 50.0f) / 100.0f);
 	}
 	
 	if (!success_state) { printf("Memory could not be allocated for matrices.\n"); return (69);
