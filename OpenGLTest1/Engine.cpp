@@ -4,7 +4,8 @@
 
 #include "./include/GL/freeglut.h"
 #include "./Object.cpp"
-#include "./Data.cpp"
+#include "Data.cpp"
+
 #include "./glm/glm.hpp"
 #include "./glm/gtc/type_ptr.hpp"
 #include "./glm/gtx/vec_swizzle.hpp"
@@ -78,7 +79,6 @@ void DrawGrid(float range, float spacing, int orientation) {
 	// grid draw sequence
 	glColor3f(grid_colour.x, grid_colour.y, grid_colour.z);
 	glBegin(GL_LINES);
-
 	for (float i = -range; i <= range; i += spacing) {
 		// width lines
 		glVertex3f(-range, 0, i);
@@ -128,21 +128,36 @@ void StartFaceType(int vertex_count) { // TODO: implement support for composite-
 }
 
 void DrawMeshActors() {
-	ActorPackage actor_list = scene_data->GetActors();
-	for (int actor = 0; actor < actor_list.num_actors;) {
+	Object** actor_list = scene_data->GetActors();
+	for (int actor = 0; actor < scene_data->stored_actors; actor++) {
 		// for every actor in top level scene
-		int object_face_count;
-		Face* object_faces = actor_list.actors[actor++]->GetFaces(&object_face_count);
+		glPushMatrix();
+		float* temp_ptr = glm::value_ptr(*(actor_list[actor])->GetTransforms()); // dies here
 		
+		glMultMatrixf(temp_ptr);
+
+		glm::vec3* object_colour = actor_list[actor]->Colour();
+		if (object_colour != nullptr) glColor3f((*object_colour).x, (*object_colour).y, (*object_colour).z);
+		else glColor3f(0.5f, 0.5f, 0.5f);
+
+		int object_face_count;
+		Face* object_faces = actor_list[actor]->GetFaces(&object_face_count);
 		// add all faces into scene
-		for (int curr_face = 0; curr_face < object_face_count;) {
-			int vertex_count = object_faces[curr_face].vertex_count;
-			glm::vec3 vertex_data = *object_faces[curr_face++].vertex_data;
+		for (int curr_face_num = 0; curr_face_num < object_face_count;) {
+			int vertex_count = object_faces[curr_face_num].vertex_count;
+			Face curr_face = object_faces[curr_face_num++];
+			
 			StartFaceType(vertex_count);
-			for (int i = 0; i < vertex_count; i++) glVertex3f(
-				vertex_data.x, vertex_data.y, vertex_data.z);
+			for (int i = 0; i < vertex_count; i++) {
+				glm::vec3 vertex_data = curr_face.vertex_data[i];
+				//printf("Draw vertex %.2f, %.2f, %.2f\n", vertex_data.x, vertex_data.y, vertex_data.z);
+
+				glVertex3f(vertex_data.x, vertex_data.y, vertex_data.z);
+			}
 			glEnd();
 		}
+
+		glPopMatrix();
 	}
 }
 
@@ -271,11 +286,21 @@ void MouseMovement(int x, int y) {
 	}
 }
 
+Object* CreateCube() {
+	int success_state = 1;
+	Object* production_cube = new Object(&success_state);
+	
+	production_cube->SetAsTrianglePrimitive(10.0f);
+	scene_data->AddActor(production_cube, &success_state);
+	printf("Cube created.\n");
+	return(production_cube);
+}
+
 void KeyDown(unsigned char button, int _x, int _y) {
 	switch (button) {
 		case(' '): shift_down = 1; break;
 		case(GLUT_ACTIVE_SHIFT): shift_down = 1; break;
-		case('A'): place_object = 1; break;// create cube
+		case('A'): CreateCube(); break;// create cube
 		case('g'): keybind_active = 1; break; // move object
 	}
 }
@@ -318,16 +343,18 @@ int main(int argc, char* argv[]) {
 
 	// animal handlers
 	Init(&success_state);
-	
-	// initialise test scene with triangle
-	scene_actor_count = 1;
-	scene_actors = (Object*)malloc(1 * sizeof(Object));
-	scene_actors[0] = *(new Object(3, &success_state));
-	glm::vec3 test_triangle[3] = { glm::vec3(-20.0f, 0.0f, 0.0f), glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 40.0f, 0.0f)};
-	scene_actors[0].AddPolygon(test_triangle);
+
+	for (int i = -50.0f; i < 50.0f; i += 10.0f) {
+		glm::mat4* transform_matrix = (glm::mat4*)malloc(sizeof(glm::mat4));
+		*transform_matrix = glm::mat4(1.0f);
+		(*transform_matrix)[3][2] = i;
+		Object* temp_cube = CreateCube();
+		temp_cube->Transform(transform_matrix);
+		temp_cube->SetColour((i + 50.0f) / 100.0f, (i + 50.0f) / 100.0f, (i + 50.0f) / 100.0f);
+	}
 	
 	if (!success_state) { printf("Memory could not be allocated for matrices.\n"); return (69);
-	} else printf("Scene setup successfully completed.\n");
+	} else printf("Scene setup successfully completed with %d actor(s).\n", scene_data->stored_actors);
 
 	int frame_pause = 1000 / FRAMERATE;
 	glutTimerFunc(frame_pause, FramerateLimiter, frame_pause);

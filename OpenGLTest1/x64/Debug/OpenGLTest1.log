@@ -1,61 +1,11 @@
-﻿  Data.cpp
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(15,8): error C2143: syntax error: missing ';' before '*'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(15,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(15,17): error C2238: unexpected token(s) preceding ';'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(22,8): error C2143: syntax error: missing ';' before '*'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(22,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(22,27): error C2238: unexpected token(s) preceding ';'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(41,16): error C2061: syntax error: identifier 'Object'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,15): error C3646: 'GetActors': unknown override specifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,24): error C2059: syntax error: '('
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,27): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(27,3): error C2065: 'Object': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(27,12): error C2065: 'temp_objects': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(27,28): error C2065: 'Object': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(27,36): error C2059: syntax error: ')'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(28,7): error C2065: 'temp_objects': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(33,3): error C2065: 'top_level_actors': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(33,22): error C2065: 'temp_objects': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(48,3): error C2065: 'top_level_actors': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(48,39): error C2065: 'actor': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(8,13): error C2011: 'Face': 'struct' type redefinition
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(8): message : see declaration of 'Face'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(16,2): error C2371: 'ActorPackage': redefinition; different basic types
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(16): message : see declaration of 'ActorPackage'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(18,12): error C2011: 'Data': 'class' type redefinition
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(18): message : see declaration of 'Data'
-  Object.cpp
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(14,6): error C2143: syntax error: missing ';' before '*'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(14,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(14,13): error C2238: unexpected token(s) preceding ';'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(80,6): error C2143: syntax error: missing ';' before '*'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(80,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(80,33): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(30,3): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(30,9): error C2065: 'temp_facedata': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(30,26): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(30,31): error C2059: syntax error: ')'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(31,7): error C2065: 'temp_facedata': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(32,8): error C2065: 'faces': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(32,16): error C2065: 'temp_facedata': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(66,4): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(66,10): error C2065: 'temp_ptr': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(66,22): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(66,27): error C2059: syntax error: ')'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(67,8): error C2065: 'temp_ptr': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(67,29): error C2065: 'faces': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(67,37): error C2065: 'temp_ptr': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(73,3): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(73,9): error C2065: 'temp': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(73,17): error C2065: 'Face': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(73,22): error C2059: syntax error: ')'
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(74,3): error C2065: 'temp': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(75,3): error C2065: 'temp': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(76,3): error C2065: 'faces': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(76,26): error C2065: 'temp': undeclared identifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,15): error C3646: 'GetActors': unknown override specifier
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,24): error C2059: syntax error: '('
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(51,27): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(10,14): error C2011: 'Object': 'class' type redefinition
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Object.cpp(10): message : see declaration of 'Object'
-  Generating Code...
+﻿  Object.cpp
+  Engine.cpp
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(36,92): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(347,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(347,39): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(350,31): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  OpenGLTest1.vcxproj -> C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\x64\Debug\OpenGLTest1.exe

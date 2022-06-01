@@ -1,20 +1,26 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
-#include "Object.h"
-#include "Data.cpp"
 
 #include "./glm/glm.hpp"
+#include "./glm/gtc/type_ptr.hpp"
 #include "./glm/gtx/vec_swizzle.hpp"
 
+struct Face {
+	int vertex_count;
+	glm::vec3* vertex_data;
+};
+
+
 class Object {
+	
 private:
 	int face_count;
 	int faces_allocated;
 	Face* faces;
 
-	float* object_colour;
-	glm::mat4 transforms;
+	glm::vec3* object_colour;
+	glm::mat4* transforms;
 
 	int num_children;
 	int allocated_children;
@@ -33,13 +39,8 @@ public:
 		face_count = 0; faces_allocated = 16;
 		
 		
-
-		float* temp = (float*)malloc(3 * sizeof(float)); // allocate and assign space for 0.75 grey colour
-		if (temp == nullptr) *success_state = 0;
-		else {
-			object_colour = temp;
-			object_colour[0] = 0.75f; object_colour[1] = 0.75f; object_colour[2] = 0.0f;
-		} temp = nullptr;
+		object_colour = (glm::vec3*)malloc(sizeof(glm::vec3));
+		*object_colour = glm::vec3(0.5f, 0.5f, 0.5f);
 
 		Object** temp_children = (Object**)malloc(0); // allocate for 0 initial children
 		if (temp_children == nullptr) *success_state = 0;
@@ -55,7 +56,13 @@ public:
 		|z1 z2 z3 0 |
 		|tx ty tz 1 |
 		*/
-		transforms = glm::mat4(1.0f);
+		glm::mat4* temp_transforms = (glm::mat4*)malloc(sizeof(glm::mat4));
+		if (temp_transforms == nullptr) {
+			*success_state = 0;
+			return;
+		}
+		transforms = temp_transforms;
+		*transforms = glm::mat4(1.0f);
 		//transforms = glm::mat4(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 		
 		
@@ -82,14 +89,41 @@ public:
 		return(faces);
 	}
 
-	float* Colour() {
+	void SetColour(float r, float g, float b) {
+		//printf("Colour set to %.2f:%.2f:%.2f\n", colour->x, colour->y, colour->z);
+
+		*object_colour = glm::vec3(r, g, b);
+	}
+
+	glm::vec3* Colour() {
+		//printf("Colour set to %.2f:%.2f:%.2f\n", object_colour->x, object_colour->y, object_colour->z);
 		return (object_colour);
 	}
 
-	glm::mat4 Transforms() {
+	void Transform(glm::mat4* input_matrix) {
+		*transforms *= *input_matrix;
+	}
+
+	glm::mat4* GetTransforms() {
+		glm::mat4* temp = transforms;
 		return(transforms);
 	}
 
 	// TODO: logical support for children
 	// DONE: structural support for children
+
+	void SetAsTrianglePrimitive(float cube_scale) {
+		glm::vec3 p1 = glm::vec3(-20.0f, -10.0f, 10.0f);
+		glm::vec3 p2 = glm::vec3(20.0f, -10.0f, 10.0f);
+		glm::vec3 p3 = glm::vec3(0.0f, 20.0f, -10.0f);
+
+		glm::vec3* points = (glm::vec3*)malloc(3*sizeof(glm::vec3));
+		if (points != nullptr) {
+			points[0] = p1;
+			points[1] = p2;
+			points[2] = p3;
+
+			this->AddPolygon(points, 3);
+		} else printf("The triangle primitive could not be created.\n");
+	}
 };
