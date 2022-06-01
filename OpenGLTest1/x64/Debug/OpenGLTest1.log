@@ -1,8 +1,8 @@
 ﻿  Engine.cpp
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(36,92): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(348,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(348,39): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(351,31): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Data.cpp(35,92): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(362,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(362,39): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\ryanc\Documents\GitHub\opengl-engine\OpenGLTest1\Engine.cpp(365,31): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float

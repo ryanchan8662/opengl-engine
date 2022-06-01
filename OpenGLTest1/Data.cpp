@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Object.cpp"
-//#include "Structures.cpp"
 
 #include "./glm/glm.hpp"
 #include "./glm/gtx/vec_swizzle.hpp"
