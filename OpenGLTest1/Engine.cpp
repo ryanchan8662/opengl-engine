@@ -73,20 +73,22 @@ void Init(int* success_state) {
 void DrawGrid(float range, float spacing, int orientation) {
 	// initialise line behaviour
 	glLineStipple(1, 0xAAAA);
-	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_LINE_STIPPLE);
 
 	// grid draw sequence
 	glColor3f(grid_colour.x, grid_colour.y, grid_colour.z);
 	glBegin(GL_LINES);
 	for (float i = -range; i <= range; i += spacing) {
-		// width lines
-		glVertex3f(-range, 0, i);
-		glVertex3f(range, 0, i);
+		if (i != 0) {
+			// width lines
+			glVertex3f(-range, 0, i);
+			glVertex3f(range, 0, i);
 
-		// depth lines
-		glVertex3f(i, 0, -range);
-		glVertex3f(i, 0, range);
+			// depth lines
+			glVertex3f(i, 0, -range);
+			glVertex3f(i, 0, range);
+		}
+		
 	}
 	glDisable(GL_LINE_STIPPLE);
 	glEnd();
@@ -113,7 +115,6 @@ void DrawGrid(float range, float spacing, int orientation) {
 
 	glColor3f(1.0f, 1.0f, 1.0f); // reset draw colour
 
-	glEnable(GL_DEPTH_TEST);
 	return;
 }
 
