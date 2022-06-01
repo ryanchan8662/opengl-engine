@@ -11,7 +11,7 @@
 #include "./glm/gtx/vec_swizzle.hpp"
 
 #define ORTHOGRAPHIC_PROJECTION 0
-#define MOUSE_SENSITIVITY 0.75f
+#define MOUSE_SENSITIVITY 0.35f
 #define FRAMERATE 120
 float orthographic_clipping = 200.0f;
 
@@ -77,12 +77,18 @@ void Init(int* success_state) {
 	
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
+	float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+	glMateriali(GL_FRONT, GL_SHININESS, 128);
+
 	// set up diffuse light source
 	float light_ambient[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	float light_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	float light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 
 	float light_position[] = { 50.0f, 50.0f, 50.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
