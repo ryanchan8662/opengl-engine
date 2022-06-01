@@ -137,7 +137,7 @@ void DrawMeshActors() {
 		// add all faces into scene
 		for (int curr_face = 0; curr_face < object_face_count;) {
 			int vertex_count = object_faces[curr_face].vertex_count;
-			glm::vec3 vertex_data = *object_faces[curr_face].vertex_data;
+			glm::vec3 vertex_data = *object_faces[curr_face++].vertex_data;
 			StartFaceType(vertex_count);
 			for (int i = 0; i < vertex_count; i++) glVertex3f(
 				vertex_data.x, vertex_data.y, vertex_data.z);
