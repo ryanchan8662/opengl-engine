@@ -19,7 +19,7 @@ float perspective_fov = 70.0f;
 float clip_near = 0.01f;
 float clip_far = 500.0f;
 
-int backface_culling = 1;
+int backface_culling = 0;
 int spin_velocity = 0;
 
 glm::vec3 camera_position;
@@ -95,9 +95,18 @@ void Init(int* success_state) {
 	glEnable(GL_LIGHT0);
 
 	glEnable(GL_NORMALIZE);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 void DrawGrid(float range, float spacing, int orientation) {
+
+	// initialise renderer behaviour
+
+	glEnable(GL_LINE_SMOOTH);
+
 	// initialise line behaviour
 	glLineStipple(1, 0xAAAA);
 	glEnable(GL_LINE_STIPPLE);
@@ -143,6 +152,9 @@ void DrawGrid(float range, float spacing, int orientation) {
 		glVertex3f(0.0f, 0.0f, range);
 	} glEnd();
 	glEnable(GL_LIGHTING);
+	//
+
+	glDisable(GL_LINE_SMOOTH);
 }
 
 // TODO: implement support for composite-face mesh groups
@@ -158,7 +170,9 @@ void StartFaceType(int vertex_count) {
 
 // TODO: transformation support for children
 void DrawMeshActors() {
-
+	glFrontFace(GL_CW);
+	glutSolidTeapot(20.0f);
+	glFrontFace(GL_CCW);
 	// store pointer of 1D actor array in procedural stack
 	Object** actor_list = scene_data->GetActors();
 
@@ -241,7 +255,8 @@ void DrawFrame() {
 
 	// environment draw sequence ~~~~~~~~~~~~~~~~~~~~
 	DrawGrid(50.0f, 5.0f, 1);
-
+	float light_position[] = { 50.0f, 50.0f, 50.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 	DrawMeshActors();
 
@@ -265,7 +280,6 @@ void Resize(int w, int h) { //TODO: fix window scroll behaviour for orthographic
 	else gluPerspective(perspective_fov, (GLfloat)w / (GLfloat)h, clip_near, clip_far);
 
 	glMatrixMode(GL_MODELVIEW);
-
 	glLoadIdentity();
 }
 
