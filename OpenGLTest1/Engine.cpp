@@ -171,6 +171,7 @@ void StartFaceType(int vertex_count) {
 // TODO: transformation support for children
 void DrawMeshActors() {
 	glFrontFace(GL_CW);
+	glColor3f(1.0f, 1.0f, 0.5f);
 	glutSolidTeapot(20.0f);
 	glFrontFace(GL_CCW);
 	// store pointer of 1D actor array in procedural stack
