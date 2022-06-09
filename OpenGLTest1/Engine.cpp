@@ -412,16 +412,6 @@ int main(int argc, char* argv[]) {
 
 	// animal handlers
 	Init(&success_state);
-
-	// variable test triangles, remove later
-	for (float i = -50.0f; i < 50.0f; i += 10.0f) {
-		glm::mat4* transform_matrix = (glm::mat4*)malloc(sizeof(glm::mat4));
-		*transform_matrix = glm::mat4(1.0f);
-		(*transform_matrix)[3][2] = i;
-		*transform_matrix = glm::rotate(*transform_matrix, glm::radians(i*2.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		Object* temp_cube = CreateCube();
-		temp_cube->Transform(transform_matrix);
-	}
 	
 	if (!success_state) { printf("Memory could not be allocated for matrices.\n"); return (69);
 	} else printf("Scene setup successfully completed with %d actor(s).\n", scene_data->stored_actors);
